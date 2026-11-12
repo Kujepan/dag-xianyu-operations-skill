@@ -1,19 +1,35 @@
 # 大G的闲鱼运营skill
 
-用一个 Codex Skill 串起闲鱼选品、上品、关键词回复和付款后发货。可以处理一批商品，也可以拿着已有商品 ID，只做回复、发货或对账。
+用一个 Agent Skill 串起闲鱼选品、上品、关键词回复和付款后发货。可以处理一批商品，也可以拿着已有商品 ID，只做回复、发货或对账。
 
 **装好就能用本地资料做选品分析、上架草稿和绑定表。** 实时发布、回复和发货需要另行接入账号已开通、且获闲鱼许可的在线服务。
 
 ## 安装
 
-在 Codex 里发送这句话：
+Skill 文件夹是 [`skills/xianyu-operations`](skills/xianyu-operations)。它包含 `SKILL.md` 和配套参考，可以交给支持 Agent Skills 的客户端。
+
+### WorkBuddy
+
+1. 下载仓库并解压。将其中的 `skills/xianyu-operations` 文件夹单独压成 ZIP，压缩包内应有 `xianyu-operations/SKILL.md`。
+2. 打开 WorkBuddy，进「专家·技能·连接器 → 技能 → 添加技能 → 上传技能」，选择这个 ZIP。在「已安装」里确认技能已启用。 [WorkBuddy 官方导入说明](https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Skills-Market)
+3. 在对话里输入「请使用 xianyu-operations 技能，给小学教辅出 10 个闲鱼采集词，先只出词」。
+
+### Codex
 
 ```text
 用 $skill-installer 安装 GitHub 仓库 Kujepan/dag-xianyu-operations-skill
 的 skills/xianyu-operations 目录。
 ```
 
-也可以下载仓库，把完整的 `skills/xianyu-operations` 文件夹复制到项目的 `.agents/skills/`，或个人的 `~/.agents/skills/`。安装后的路径末尾是 `xianyu-operations/SKILL.md`。如果 Codex 没显示新技能，重启后再试。 [OpenAI Docs 的 Skill 安装说明](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills)
+也可以把完整技能文件夹复制到项目的 `.agents/skills/` 或个人的 `~/.agents/skills/`。通过 `$xianyu-operations` 调用。如果技能列表没有更新，重启 Codex 再查看。 [OpenAI Docs 的 Skill 安装说明](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills)
+
+### Claude Code、Cursor 和其他助手
+
+- **Claude Code** 将技能文件夹放进项目的 `.claude/skills/`，在对话里用 `/xianyu-operations`。 [Claude Code 技能文档](https://code.claude.com/docs/en/skills)
+- **Cursor** 将技能文件夹放进项目的 `.cursor/skills/` 或 `.agents/skills/`，在 Agent 对话里指定使用 `xianyu-operations`。 [Cursor 技能文档](https://cursor.com/docs/skills)
+- **普通聊天助手**可以上传或粘贴 `SKILL.md` 及 [配置与核验](skills/xianyu-operations/references/workflow.md)，按本轮要求整理词表、草稿或复盘。
+
+后面的示例采用 Codex 的 `$xianyu-operations` 写法。在其他客户端，把它换成该客户端的调用方式即可。平台实操取决于当前客户端能使用哪些已授权工具。在线回复、付款事件监听和发货由已接入的服务负责。
 
 ## 从一个商品开始
 
@@ -26,7 +42,7 @@
 - **已经知道做哪个行业**：在闲鱼 App 搜自己的行业词，再按用途、人群、规格或交付形式细化。比如做教辅，可以从「小学教辅」细化到「一年级拼音练习」。本教程的「每周计划表」「A4 周计划」是计划表这个示例的搜索词。
 - **想找新方向**：查看鱼小铺工作台中账号能看到的缺货榜、趋势榜或爆卖榜。先选相关类目，把榜单名称、日期或周期、排名、上榜词和页面显示的指标截下来。挑出你能提供的几个方向，再用上榜词和具体交付词回闲鱼 App 搜同类商品。 [闲管家卖家攻略](https://xygj.pro/website/content?article_id=498458897921413&category_id=undefined&title=%E6%B5%81%E9%87%8F%E6%9B%9D%E5%85%89&type=21)
 
-**先出词。** 告诉 Codex 你的行业、目标买家和能交付什么。手上有榜单截图也可以一并附上。让 Skill 输出一份**每行一个词**的采集清单，先列核心商品词，再补人群、用途、规格或交付方式等细分词。也可以把你已有的种子词直接交给 Skill。
+**先出词。** 告诉助手你的行业、目标买家和能交付什么。手上有榜单截图也可以一并附上。让 Skill 输出一份**每行一个词**的采集清单，先列核心商品词，再补人群、用途、规格或交付方式等细分词。也可以把你已有的种子词直接交给 Skill。
 
 ```text
 用 $xianyu-operations 给［行业］出一版闲鱼采集词。
@@ -34,7 +50,7 @@
 结合我附上的榜单线索，输出 10 个词，每行一个，先出词。
 ```
 
-**再采集。** 有获许可的搜索入口时，把清单交给 Skill 逐词采集。也可以自己在闲鱼 App 搜，把截图或表格交给 Codex。第一轮可按同一种排序每词取前 10 条，记录搜索词、日期、商品 ID 或链接、标题、挂牌价、可见的想要数和实际交付形态。起价、多规格价格和缺失字段照页面记录。
+**再采集。** 有获许可的搜索入口时，把清单交给 Skill 逐词采集。也可以自己在闲鱼 App 搜，把截图或表格交给助手。第一轮可按同一种排序每词取前 10 条，记录搜索词、日期、商品 ID 或链接、标题、挂牌价、可见的想要数和实际交付形态。起价、多规格价格和缺失字段照页面记录。
 
 ```text
 用 $xianyu-operations 按这份词表采集，每词取综合排序前 10 条。
@@ -63,7 +79,7 @@
 #### 数字资料与百度网盘拉新
 
 1. 准备原创或可合法分发的文件，核对闲鱼所选类目、交付入口和活动条款是否允许这类网盘交付和推广。写明买家是否需要注册、登录或转存。
-2. 已有可用分享链接时，提供文件对应关系和领取步骤。要让 Codex 上传文件、管理普通分享或核对链接时，可接入百度网盘 MCP。按百度网盘文档配置连接器并完成账号授权。先用列文件或核验已知分享确认账号，再按需上传或创建分享。 [百度网盘 MCP](https://github.com/baidu-netdisk/mcp) · [百度网盘文件管理 Skill](https://github.com/baidu-netdisk/bdpan-storage)
+2. 已有可用分享链接时，提供文件对应关系和领取步骤。要让助手上传文件、管理普通分享或核对链接时，可接入百度网盘 MCP。按百度网盘文档配置连接器并完成账号授权。先用列文件或核验已知分享确认账号，再按需上传或创建分享。 [百度网盘 MCP](https://github.com/baidu-netdisk/mcp) · [百度网盘文件管理 Skill](https://github.com/baidu-netdisk/bdpan-storage)
 3. 要计拉新或转存奖励时，另在**已开通的推广项目**中绑定账号，按项目要求生成或登记推广链接，并在项目后台核对归因。普通分享链接可以交付文件，计佣以项目后台的归因和结算记录为准。
 4. 用买家视角核对链接能否打开、提取码、有效期和文件是否对应。按商品或规格保存交付引用，再交给发货规则使用。
 
@@ -74,7 +90,7 @@
 | 服务 | 服务范围、计价单位、需要买家提供的资料、预约方式、交付时限 | 发需求清单或预约说明。按约完成服务，再记录交付或验收 |
 | 实物 | 实物照片、规格、成色、库存、运费与发货时限 | 核对订单规格和库存，打包交给物流，按平台支持的方式填写或同步运单 |
 
-固定问答可以先用已确认的关键词模板。复杂咨询可以先让 Codex 起草，由你核对后发送。想让在线客服自动生成回复时，使用平台或获许可服务商提供的 AI 客服能力。如果服务支持且你选择自接模型，再在服务里配置模型和 API 密钥。先用常见问题测试，价格承诺、退款和售后交给人工处理。
+固定问答可以先用已确认的关键词模板。复杂咨询可以先让助手起草，由你核对后发送。想让在线客服自动生成回复时，使用平台或获许可服务商提供的 AI 客服能力。如果服务支持且你选择自接模型，再在服务里配置模型和 API 密钥。先用常见问题测试，价格承诺、退款和售后交给人工处理。
 
 ### 4. 上品
 
