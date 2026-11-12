@@ -6,11 +6,13 @@
 
 ## 安装
 
+[**下载通用 Skill ZIP**](https://github.com/Kujepan/dag-xianyu-operations-skill/releases/latest/download/xianyu-operations-portable.zip) · [版本记录](https://github.com/Kujepan/dag-xianyu-operations-skill/releases)
+
 Skill 文件夹是 [`skills/xianyu-operations`](skills/xianyu-operations)。它包含 `SKILL.md` 和配套参考，可以交给支持 Agent Skills 的客户端。
 
 ### WorkBuddy
 
-1. 下载仓库并解压。将其中的 `skills/xianyu-operations` 文件夹单独压成 ZIP，压缩包内应有 `xianyu-operations/SKILL.md`。
+1. 从 GitHub Releases [下载通用 Skill ZIP](https://github.com/Kujepan/dag-xianyu-operations-skill/releases/latest/download/xianyu-operations-portable.zip)。
 2. 打开 WorkBuddy，进「专家·技能·连接器 → 技能 → 添加技能 → 上传技能」，选择这个 ZIP。在「已安装」里确认技能已启用。 [WorkBuddy 官方导入说明](https://www.codebuddy.cn/docs/workbuddy/From-Beginner-to-Expert-Guide/Function-Description/Skills-Market)
 3. 在对话里输入「请使用 xianyu-operations 技能，给小学教辅出 10 个闲鱼采集词，先只出词」。
 
