@@ -6,6 +6,14 @@
 
 ## 安装
 
+复制这一句，发给你正在用的 AI 助手。
+
+```text
+请从 https://github.com/Kujepan/dag-xianyu-operations-skill/releases/latest/download/xianyu-operations-portable.zip 安装「大G的闲鱼运营skill」并告诉我怎么调用，需要手动导入的话就先下载 ZIP 并告诉我导入入口。
+```
+
+支持安装自定义 Skill 且能写入技能目录的助手可以代装。WorkBuddy 的本地技能包按下方路径上传。
+
 [**下载通用 Skill ZIP**](https://github.com/Kujepan/dag-xianyu-operations-skill/releases/latest/download/xianyu-operations-portable.zip) · [版本记录](https://github.com/Kujepan/dag-xianyu-operations-skill/releases)
 
 Skill 文件夹是 [`skills/xianyu-operations`](skills/xianyu-operations)。它包含 `SKILL.md` 和配套参考，可以交给支持 Agent Skills 的客户端。
