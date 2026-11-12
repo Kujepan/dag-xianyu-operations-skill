@@ -1,0 +1,4 @@
+interface:
+  display_name: "大G的闲鱼运营skill"
+  short_description: "整合闲鱼关键词选品、商品上架、固定回复、付款后发货和结果核验"
+  default_prompt: "用 $xianyu-operations 处理这批闲鱼商品的选品、上架、回复和发货。"
